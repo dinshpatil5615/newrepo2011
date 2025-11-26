@@ -40,16 +40,25 @@ pipeline {
    	 			}
 			}
 
-        stage("Deploy to Target") {
-            steps {
-                sh '''
-					ssh -o StrictHostKeyChecking=no azureuser@134.149.97.100 <<'EOF'
-					docker pull dineshpatil0908/ci-cd-python:latest
-					docker rm -f flask-app 2>/dev/null || true
-					docker run -d --name flask-app -p 5000:5000 dineshpatil0908/ci-cd-python:latest
-					EOF
-					'''
-            }
-        }
+       stage('Deploy to Target') {
+		    steps {
+		        sh '''
+		            ssh -o StrictHostKeyChecking=no azureuser@134.149.97.100 << 'EOF'
+		                echo "===== Pulling Latest Image ====="
+		                docker pull dineshpatil0908/ci-cd-python:latest
+		
+		                echo "===== Removing Old Container (if exists) ====="
+		                if docker ps -a --format "{{.Names}}" | grep -w flask-app > /dev/null; then
+		                    docker rm -f flask-app
+		                else
+		                    echo "No existing container found"
+		                fi
+		
+		                echo "===== Running New Container ====="
+		                docker run -d --name flask-app -p 5000:5000 dineshpatil0908/ci-cd-python:latest || exit 1
+		            EOF
+		        '''
+    		}
+		}
     }
 }
