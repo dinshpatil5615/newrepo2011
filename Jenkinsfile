@@ -43,10 +43,7 @@ pipeline {
         stage("Deploy to Target") {
             steps {
                 sh """
-                    ssh -o StrictHostKeyChecking=no ${TARGET_USER}@${TARGET_HOST} '
-                        "docker pull dineshpatil0908/ci-cd-python:latest && \
-						docker rm -f flask-app || true && \
-						docker run -d --name flask-app -p 5000:5000 dineshpatil0908/ci-cd-python:latest"
+                    ssh -o StrictHostKeyChecking=no azureuser@134.149.97.100 "docker pull dineshpatil0908/ci-cd-python:latest && docker rm -f flask-app || true && docker run -d --name flask-app -p 5000:5000 dineshpatil0908/ci-cd-python:latest"
                     '
                 """
             }
