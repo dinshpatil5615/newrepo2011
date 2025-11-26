@@ -45,7 +45,7 @@ pipeline {
                 sh """
                     ssh -o StrictHostKeyChecking=no ${TARGET_USER}@${TARGET_HOST} '
                         docker pull ${IMAGE}:latest;
-                        docker rm -f node-cicd-app || true;
+                        docker rm -f flask-app || true;
                         docker run -d --name flask-app -p 5000:5000 ${IMAGE}:latest;
                     '
                 """
