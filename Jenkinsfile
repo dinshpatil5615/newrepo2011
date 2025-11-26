@@ -36,7 +36,7 @@ pipeline {
 
 		stage("Push to DockerHub") {
     		steps {
-        		sh "docker push dineshpatil0908/python-cicd:latest"
+        		sh "docker push dineshpatil0908/ci-cd-python:latest"
    	 			}
 			}
 
