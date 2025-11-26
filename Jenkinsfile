@@ -12,14 +12,14 @@ pipeline {
         stage("Checkout") {
             steps {
                 git branch: 'main',
-                    url: 'https://github.com/dinshpatil5615/Node-App-Demo.git'
+                    url: 'https://github.com/dinshpatil5615/newrepo2011.git'
             }
         }
 
         stage("Build Docker Image") {
             steps {
                 sh """
-                    docker build -t dineshpatil0908/ci-cd-docker:latest .
+                    docker build -t dineshpatil0908/ci-cd-python:latest .
                 """
             }
         }
@@ -46,7 +46,7 @@ pipeline {
                     ssh -o StrictHostKeyChecking=no ${TARGET_USER}@${TARGET_HOST} '
                         docker pull ${IMAGE}:latest;
                         docker rm -f node-cicd-app || true;
-                        docker run -d --name node-cicd-app -p 3000:3000 ${IMAGE}:latest;
+                        docker run -d --name flask-app -p 5000:5000 ${IMAGE}:latest;
                     '
                 """
             }
