@@ -34,11 +34,11 @@ pipeline {
             }
         }
 
-        stage("Push Image") {
-            steps {
-                sh "docker push ${IMAGE}:latest"
-            }
-        }
+		stage("Push to DockerHub") {
+    		steps {
+        		sh "docker push dineshpatil0908/python-cicd:latest"
+   	 			}
+			}
 
         stage("Deploy to Target") {
             steps {
